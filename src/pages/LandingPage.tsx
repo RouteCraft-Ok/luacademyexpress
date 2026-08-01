@@ -71,7 +71,6 @@ export const LandingPage = ({ courses = [], favorites = [], toggleFavorite, navi
   const newCourses = courses.slice(0, 10);
 
   // 2. Cursos más demandados: Toman una sección secundaria o ordenada por popularidad
-  // (tomamos desde el índice 2 en adelante o cursos con categoría asignada)
   const popularCourses = courses.length > 5 ? courses.slice(2, 12) : courses;
 
   // 3. Cursos Gratuitos
@@ -88,27 +87,41 @@ export const LandingPage = ({ courses = [], favorites = [], toggleFavorite, navi
   return (
     <div className="landing-wrapper">
       {/* HERO SECTION */}
-      <section className="hero-education">
-        <div className="container-center">
-          <h1 className="hero-title">Domina las <span className="text-gradient">Tecnologías</span> del Futuro</h1>
-          <p className="hero-subtitle">Aprende de expertos con rutas guiadas y proyectos reales.</p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '40px' }}>
-            <button className="btn-primary-levelup" style={{ padding: '15px 40px', fontSize: '1.1rem' }} onClick={() => navigateTo('explorer')}>
-              Ver Catálogo Completo
-            </button>
-            <button 
-              style={{ background: 'transparent', border: '1px solid #a855f7', color: 'white', padding: '15px 40px', borderRadius: '10px', cursor: 'pointer' }}
-              onClick={() => navigateTo('categories')}
-            >
-              Rutas de Carrera
-            </button>
-          </div>
-        </div>
-      </section>
+<section className="hero-education">
+  <div className="container-center">
+    <h1 className="hero-title" style={{ wordBreak: 'break-word' }}>
+      Domina las <span className="text-gradient">Tecnologías</span> del Futuro
+    </h1>
+    <p className="hero-subtitle">Aprende de expertos con rutas guiadas y proyectos reales.</p>
+    
+    <div className="hero-buttons-container">
+      <button 
+        className="btn-primary-levelup" 
+        onClick={() => navigateTo('explorer')}
+      >
+        Ver Catálogo Completo
+      </button>
+      
+      <button 
+        style={{ 
+          background: 'transparent', 
+          border: '1px solid #a855f7', 
+          color: 'white', 
+          padding: '10px 24px', 
+          borderRadius: '8px', 
+          cursor: 'pointer',
+          fontSize: '1rem',
+          fontWeight: 'bold'
+        }}
+        onClick={() => navigateTo('categories')}
+      >
+        Rutas de Carrera
+      </button>
+    </div>
+  </div>
+</section>
 
       {/* SECCIONES DE CARRUSELES */}
-      
-      {/* Pone primero la sección de Nuevos Lanzamientos para destacar lo nuevo */}
       <CarouselSection 
         title="✨ Nuevos Lanzamientos" 
         courses={newCourses} 

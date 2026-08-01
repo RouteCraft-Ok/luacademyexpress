@@ -218,35 +218,41 @@ export const DashboardPage = ({
 
       {/* GRILLA DE CURSOS O DIPLOMAS */}
       {currentItems.length > 0 ? (
-        <div className={activeTab === 'Certificados' ? "certificates-column" : "jobs-list"}>
+        <div className={activeTab === 'Certificados' || activeTab === 'Mis Rutas' ? "certificates-column" : "jobs-list"}>
           {currentItems.map((item: any) => {
             if (activeTab === 'Mis Rutas') {
-              return (
-                <div key={item.id} className="route-progress-card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                    <div>
-                      <span style={{ color: '#4ade80', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '1px' }}>RUTA EN CURSO</span>
-                      <h3 style={{ color: 'white', margin: '5px 0 0 0', fontSize: '1.4rem' }}>{item.title}</h3>
-                    </div>
-                    <div>
-                      <span style={{ color: '#4ade80', fontSize: '1.4rem', fontWeight: '900' }}>{item.progress}%</span>
-                    </div>
-                  </div>
-                  <div style={{ background: 'rgba(255,255,255,0.1)', height: '10px', borderRadius: '6px', marginBottom: '20px', overflow: 'hidden' }}>
-                    <div style={{ 
-                      width: `${item.progress}%`, background: '#4ade80', height: '100%', borderRadius: '6px',
-                      transition: 'width 0.8s ease'
-                    }}></div>
-                  </div>
-                  <button 
-                    onClick={() => { setSelectedRoute(item); navigateTo('path-detail'); }}
-                    style={{ background: 'rgba(74, 222, 128, 0.1)', border: '1px solid #4ade80', color: '#4ade80', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
-                  >
-                    CONTINUAR ESTA RUTA →
-                  </button>
-                </div>
-              );
-            }
+  return (
+    <div key={item.id} className="route-progress-card-pro">
+      <div className="route-card-header">
+        <div>
+          <span className="route-status-badge">🗺️ RUTA EN CURSO</span>
+          <h3 className="route-card-title">{item.title}</h3>
+        </div>
+        <div className="route-percentage-box">
+          <span className="route-percentage-num">{item.progress}%</span>
+          <span className="route-percentage-label">Completado</span>
+        </div>
+      </div>
+
+      <div className="route-progress-bar-bg">
+        <div 
+          className="route-progress-bar-fill" 
+          style={{ width: `${item.progress}%` }}
+        />
+      </div>
+
+      <div className="route-card-footer">
+        <span className="route-info-text">Continúa donde lo dejaste para avanzar en tu especialización.</span>
+        <button 
+          onClick={() => { setSelectedRoute(item); navigateTo('path-detail'); }}
+          className="btn-continue-route"
+        >
+          CONTINUAR ESTA RUTA →
+        </button>
+      </div>
+    </div>
+  );
+}
 
             if (activeTab === 'Certificados') {
               return (
@@ -267,15 +273,14 @@ export const DashboardPage = ({
             }
 
             return (
-              <div key={item.id} style={{ position: 'relative' }}>
-                <CourseCard 
-                  course={item} 
-                  isFavorite={favorites.includes(item.id)} 
-                  onFavorite={toggleFavorite} 
-                  onClick={() => { setSelectedCourse(item); navigateTo('course-detail') }} 
-                />
-              </div>
-            );
+  <CourseCard 
+    key={item.id}
+    course={item} 
+    isFavorite={favorites.includes(item.id)} 
+    onFavorite={toggleFavorite} 
+    onClick={() => { setSelectedCourse(item); navigateTo('course-detail') }} 
+  />
+);
           })}
         </div>
       ) : (

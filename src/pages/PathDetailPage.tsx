@@ -113,8 +113,8 @@ export const PathDetailPage = ({
           validRouteCourses.map((c: any, index: number) => {
             const isDone = completed.map(String).includes(String(c.id));
             return (
-              <div key={c.id} style={{ display: 'flex', gap: '30px', position: 'relative' }}>
-                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '50px' }}>
+              <div key={c.id} className="path-step-container">
+                 <div className="path-step-indicator">
                     <div style={{ 
                       width: '40px', height: '40px', borderRadius: '50%', 
                       background: isDone ? (selectedRoute.color || '#4ade80') : '#1e293b', 
@@ -122,10 +122,10 @@ export const PathDetailPage = ({
                       display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, fontWeight: 'bold', border: isDone ? 'none' : '2px solid #334155'
                     }}> {isDone ? '✓' : index + 1} </div>
                     {index !== validRouteCourses.length - 1 && (
-                      <div style={{ width: '2px', height: '180px', background: isDone ? (selectedRoute.color || '#4ade80') : '#334155' }} />
+                      <div className="path-step-line" style={{ background: isDone ? (selectedRoute.color || '#4ade80') : '#334155' }} />
                     )}
                  </div>
-                 <div style={{ flexGrow: 1, maxWidth: '450px', marginBottom: '40px' }}>
+                 <div className="path-step-content">
                     <CourseCard 
                       course={c} 
                       isFavorite={favorites.map(String).includes(String(c.id))} 

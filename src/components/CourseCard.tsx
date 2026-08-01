@@ -20,13 +20,14 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onClick, onFavor
         transition: 'transform 0.2s, box-shadow 0.2s',
         
         /* 📏 TAMAÑO FIJO Y ESTÁNDAR PARA TODA LA APP */
-        width: '300px',
-        height: '400px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        boxSizing: 'border-box',
-        flexShrink: 0
+        width: '100%',
+maxWidth: '300px',
+height: '400px',
+display: 'flex',
+flexDirection: 'column',
+justifyContent: 'space-between',
+boxSizing: 'border-box',
+flexShrink: 1
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-5px)';

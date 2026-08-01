@@ -253,6 +253,35 @@
   }
 }
 
+/* Ajustes Responsive (Pantallas menores a 900px, incluye iPad Mini) */
+@media (max-width: 900px) {
+  .explorer-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .explorer-sidebar {
+    width: 100%;
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+
+  /* Forzamos el buscador en vertical para iPad y móviles */
+  .search-box-premium {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box-premium input {
+    width: 100%;
+  }
+
+  .search-box-premium .btn-primary-levelup {
+    width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   .explorer-title {
     font-size: 2rem;
@@ -260,9 +289,5 @@
 
   .courses-grid {
     grid-template-columns: 1fr;
-  }
-
-  .search-box-premium {
-    flex-direction: column;
   }
 }

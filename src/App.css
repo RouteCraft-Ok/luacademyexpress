@@ -670,9 +670,11 @@ html, body, #root {
 
 .ai-chat-window {
   position: fixed;
-  bottom: 100px;
-  right: 30px;
+  bottom: 90px;
+  right: 20px;
   width: 350px;
+  max-width: calc(100vw - 40px); /* Evita que en pantallas chicas supere el ancho de pantalla */
+  max-height: 80vh; /* Se adapta según el alto de la pantalla */
   height: 500px;
   background: var(--bg-card);
   border: 1px solid rgba(168, 85, 247, 0.3);
@@ -680,9 +682,21 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   animation: slideUp 0.3s ease;
+}
+
+/* Ajuste específico para celulares */
+@media (max-width: 480px) {
+  .ai-chat-window {
+    right: 50% !important;
+    transform: translateX(50%) !important; /* Centra la ventana exactamente en pantalla */
+    width: 90vw !important; /* 90% del ancho de pantalla para dejar márgenes limpios a los lados */
+    max-width: 340px !important;
+    bottom: 80px !important;
+    height: 68vh !important;
+  }
 }
 
 @keyframes slideUp {
@@ -1081,16 +1095,6 @@ html, body, #root {
   width: 100%;
 }
 
-.jobs-list {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  width: 100% !important;
-  max-width: 1100px !important;
-  margin: 0 auto !important;
-  gap: 20px !important;
-}
-
 .premium-cert-row * {
   visibility: visible !important;
   opacity: 1 !important;
@@ -1203,3 +1207,180 @@ html, body, #root {
   object-fit: cover;
 }
 
+/* ==========================================
+   HERO BUTTONS & RESPONSIVE FIXES
+========================================== */
+
+/* 1. SEPARACIÓN DE BOTONES EN DESKTOP */
+.hero-buttons-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 32px !important; /* <--- Aumentamos la separación entre botones */
+  margin-top: 35px !important;
+  width: 100% !important;
+}
+
+/* 2. ADAPTACIÓN EXCLUSIVA MÓVIL (Menos de 768px) */
+@media (max-width: 768px) {
+  .hero-education h1 {
+    font-size: 2rem !important;
+    line-height: 1.2;
+    padding: 0 10px;
+  }
+
+  .hero-education p {
+    font-size: 1rem !important;
+    padding: 0 15px;
+  }
+
+  .hero-buttons-container {
+    flex-direction: column !important;
+    gap: 15px !important;
+    padding: 0 15px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-buttons-container button {
+    width: 100% !important;
+    max-width: 320px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-education h1 {
+    font-size: 2.2rem !important;
+  }
+
+  .home-carousel-item {
+    flex: 0 0 100% !important;
+    min-width: 100% !important;
+  }
+}
+
+/* ==========================================
+   AJUSTES RESPONSIVOS DE RUTA (PathDetailPage)
+========================================== */
+
+.vertical-path {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.path-step-container {
+  display: flex;
+  gap: 30px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.path-step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.path-step-line {
+  width: 2px;
+  height: 180px;
+}
+
+.path-step-content {
+  flex: 1;
+  max-width: 450px;
+  margin-bottom: 40px;
+  min-width: 0;
+}
+
+/* ==========================================
+   FIX DEFINITIVO DE CENTRADO EN MÓVIL (PathDetailPage)
+========================================== */
+@media (max-width: 600px) {
+  /* 1. Reset completo de la lista contenedora */
+  .vertical-path {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centra todos los hijos */
+  }
+
+  .path-step-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* 2. Ocultamos indicador lateral */
+  .path-step-indicator {
+    display: none !important;
+  }
+
+  /* 3. Forzamos centrado exacto del contenedor de la tarjeta */
+  .path-step-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 24px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* 4. Reseteo total del CourseCard para que entre holgado y centrado */
+  .path-step-content .course-card,
+  .path-step-content .course-card-mini {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==========================================
+   FIX ESPECÍFICO DASHBOARD MÓVIL
+========================================== */
+@media (max-width: 600px) {
+  /* 1. Ajuste del banner principal */
+  .profile-banner-pro {
+    padding: 20px 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 25px !important;
+  }
+
+  /* 2. Quitar el ancho fijo de 300px que rompía el responsive */
+  .profile-stats-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. Asegurar que la barra y textos de XP no desborden */
+  .profile-progress-box,
+  .progress-bar-bg-pro {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 4. Mantiene el avatar redondo y en su tamaño original */
+  .profile-avatar-badge {
+    width: 75px !important;
+    height: 75px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+}
