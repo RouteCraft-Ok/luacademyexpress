@@ -2,7 +2,14 @@ import { useRef } from 'react';
 import { CourseCard } from '../components/CourseCard';
 
 // --- SUB-COMPONENTE DEL CARRUSEL ---
-const CarouselSection = ({ title, courses, favorites, toggleFavorite, navigateTo, setSelectedCourse }: any) => {
+const CarouselSection = ({ 
+  title, 
+  courses, 
+  favorites, 
+  toggleFavorite, 
+  navigateTo, 
+  setSelectedCourse 
+}: any) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -55,7 +62,10 @@ const CarouselSection = ({ title, courses, favorites, toggleFavorite, navigateTo
               course={c} 
               isFavorite={favorites.includes(c.id)} 
               onFavorite={toggleFavorite} 
-              onClick={() => { setSelectedCourse(c); navigateTo('course-detail') }} 
+              onClick={() => { 
+                setSelectedCourse(c); // Guarda el objeto completo del curso
+                navigateTo('course-detail'); // Solo navega, sin pasar 'landing' para no romper el vídeo
+              }} 
             />
           </div>
         ))}
@@ -65,12 +75,18 @@ const CarouselSection = ({ title, courses, favorites, toggleFavorite, navigateTo
 };
 
 // --- COMPONENTE PRINCIPAL ---
-export const LandingPage = ({ courses = [], favorites = [], toggleFavorite, navigateTo, setSelectedCourse }: any) => {
+export const LandingPage = ({ 
+  courses = [], 
+  favorites = [], 
+  toggleFavorite, 
+  navigateTo, 
+  setSelectedCourse 
+}: any) => {
   
-  // 1. Nuevos Lanzamientos: Toman directamente los primeros elementos (los más recientes)
+  // 1. Nuevos Lanzamientos
   const newCourses = courses.slice(0, 10);
 
-  // 2. Cursos más demandados: Toman una sección secundaria o ordenada por popularidad
+  // 2. Cursos más demandados
   const popularCourses = courses.length > 5 ? courses.slice(2, 12) : courses;
 
   // 3. Cursos Gratuitos
@@ -87,39 +103,39 @@ export const LandingPage = ({ courses = [], favorites = [], toggleFavorite, navi
   return (
     <div className="landing-wrapper">
       {/* HERO SECTION */}
-<section className="hero-education">
-  <div className="container-center">
-    <h1 className="hero-title" style={{ wordBreak: 'break-word' }}>
-      Domina las <span className="text-gradient">Tecnologías</span> del Futuro
-    </h1>
-    <p className="hero-subtitle">Aprende de expertos con rutas guiadas y proyectos reales.</p>
-    
-    <div className="hero-buttons-container">
-      <button 
-        className="btn-primary-levelup" 
-        onClick={() => navigateTo('explorer')}
-      >
-        Ver Catálogo Completo
-      </button>
-      
-      <button 
-        style={{ 
-          background: 'transparent', 
-          border: '1px solid #a855f7', 
-          color: 'white', 
-          padding: '10px 24px', 
-          borderRadius: '8px', 
-          cursor: 'pointer',
-          fontSize: '1rem',
-          fontWeight: 'bold'
-        }}
-        onClick={() => navigateTo('categories')}
-      >
-        Rutas de Carrera
-      </button>
-    </div>
-  </div>
-</section>
+      <section className="hero-education">
+        <div className="container-center">
+          <h1 className="hero-title" style={{ wordBreak: 'break-word' }}>
+            Domina las <span className="text-gradient">Tecnologías</span> del Futuro
+          </h1>
+          <p className="hero-subtitle">Aprende de expertos con rutas guiadas y proyectos reales.</p>
+          
+          <div className="hero-buttons-container">
+            <button 
+              className="btn-primary-levelup" 
+              onClick={() => navigateTo('explorer')}
+            >
+              Ver Catálogo Completo
+            </button>
+            
+            <button 
+              style={{ 
+                background: 'transparent', 
+                border: '1px solid #a855f7', 
+                color: 'white', 
+                padding: '10px 24px', 
+                borderRadius: '8px', 
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: 'bold'
+              }}
+              onClick={() => navigateTo('categories')}
+            >
+              Rutas de Carrera
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* SECCIONES DE CARRUSELES */}
       <CarouselSection 

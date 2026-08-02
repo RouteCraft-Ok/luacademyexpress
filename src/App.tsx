@@ -85,16 +85,23 @@ const App: React.FC = () => {
 
   // 3. SELECCIONAR CURSO MODIFICADO (Registra automáticamente el origen 'fromPage')
   const handleSelectCourse = async (course: any) => {
-    setSelectedCourse(course);
-    localStorage.setItem('selectedCourse', JSON.stringify(course));
-    
-    if (view === 'landing' || view === 'explorer' || view === 'dashboard' || view === 'path-detail') {
-      setFromPage(view);
-      localStorage.setItem('fromPage', view);
-    }
-    
-    navigateTo('course-detail');
-  };
+  setSelectedCourse(course);
+  localStorage.setItem('selectedCourse', JSON.stringify(course));
+
+  // Si el usuario viene del Landing, Explorer o Dashboard,
+  // eliminamos la ruta activa.
+  if (view === 'landing' || view === 'explorer' || view === 'dashboard') {
+    setSelectedRoute(null);
+    localStorage.removeItem('selectedRoute');
+  }
+
+  if (view === 'landing' || view === 'explorer' || view === 'dashboard' || view === 'path-detail') {
+    setFromPage(view);
+    localStorage.setItem('fromPage', view);
+  }
+
+  navigateTo('course-detail');
+};
 
   useEffect(() => {
     const savedView = localStorage.getItem('lastView');
