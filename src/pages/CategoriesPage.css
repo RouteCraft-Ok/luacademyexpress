@@ -1,0 +1,130 @@
+/* src/pages/CategoriesPage.css */
+
+.categories-container {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 0 20px 60px;
+  box-sizing: border-box;
+}
+
+.categories-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.categories-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.categories-subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+/* GRILLA CONTROLADA (Mantiene tarjetas de max 320px centradas) */
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+  gap: 25px;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* TARJETA DE RUTA */
+.route-card-premium {
+  width: 100%;
+  max-width: 320px;
+  background: #1e293b;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #334155;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.route-card-premium:hover {
+  transform: translateY(-5px);
+  border-color: #4ade80;
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.route-badge-color {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.route-card-image {
+  height: 140px;
+  background-position: center;
+  background-size: cover;
+  border-bottom: 1px solid #334155;
+}
+
+.route-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.route-card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.route-card-description {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin: 10px 0 20px 0;
+  line-height: 1.4;
+  min-height: 40px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.route-card-footer {
+  margin-top: auto;
+}
+
+.route-card-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.progress-bar-bg {
+  height: 6px;
+  background: #0f172a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .routes-grid {
+    grid-template-columns: 1fr;
+  }
+}

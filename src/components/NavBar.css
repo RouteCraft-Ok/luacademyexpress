@@ -1,0 +1,199 @@
+/* src/components/NavBar.css */
+
+.main-nav {
+  background-color: #1a1a2e;
+  border-bottom: 2px solid #4ade80;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* LOGO */
+.nav-logo-link {
+  cursor: pointer;
+  user-select: none;
+}
+
+.brand-logo {
+  color: #4ade80;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.brand-accent {
+  color: #a855f7;
+}
+
+/* MENÚ Y BOTONES DE NAVEGACIÓN (DESKTOP) */
+.nav-content {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.user-greeting {
+  margin-right: 15px;
+  padding-right: 15px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.user-name {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+/* BOTONES BASE */
+.nav-btn {
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+  padding: 6px 10px;
+}
+
+.nav-btn:hover {
+  opacity: 0.8;
+}
+
+.nav-btn-highlight {
+  color: #a855f7;
+  font-weight: bold;
+}
+
+.nav-btn-account {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+/* BOTÓN ADMIN */
+.nav-btn-admin {
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.1);
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 1px solid #22d3ee;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.nav-btn-admin:hover {
+  background: rgba(34, 211, 238, 0.25);
+}
+
+/* BOTÓN PRINCIPAL (SALIR / COMANZAR) */
+.btn-primary-levelup {
+  margin-left: 10px;
+  background-color: #4ade80;
+  color: #1a1a2e;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary-levelup:hover {
+  background-color: #22c55e;
+  transform: translateY(-1px);
+}
+
+/* BOTÓN HAMBURGUESA (CELULAR) */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #4ade80;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ---------- RESPONSIVE MOBILE (TARJETA FLOTANTE) ---------- */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .nav-content {
+    display: none;
+    position: absolute;
+    top: 75px;
+    right: 15px;
+    width: calc(100% - 30px);
+    max-width: 320px;
+    background-color: #121225;
+    border: 1px solid #4ade80;
+    border-radius: 16px;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    box-sizing: border-box;
+  }
+
+  .nav-content.mobile-open {
+    display: flex;
+    animation: fadeInDown 0.25s ease-out;
+  }
+
+  .nav-btn, 
+  .nav-btn-admin, 
+  .btn-primary-levelup {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  .nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .user-greeting {
+    margin-right: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .btn-primary-levelup {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+/* Animación de entrada suave */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

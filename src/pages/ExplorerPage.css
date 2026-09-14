@@ -1,0 +1,293 @@
+/* src/pages/ExplorerPage.css */
+
+.explorer-header {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.explorer-title {
+  font-size: 2.8rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.explorer-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px 60px;
+  box-sizing: border-box;
+}
+
+/* ---------- SIDEBAR DE FILTROS (UX/UI MEJORADA) ---------- */
+.explorer-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background-color: #1a1a2e;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 120px); /* Evita que sobrepase la pantalla */
+  overflow-y: auto; /* Permite scroll interno si hay muchos filtros */
+  box-sizing: border-box;
+}
+
+/* Scrollbar personalizado súper fino y elegante */
+.explorer-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.explorer-sidebar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.explorer-sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+.explorer-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #4ade80;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 10px;
+}
+
+.sidebar-title {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.btn-clear-filters {
+  background: none;
+  border: none;
+  color: #4ade80;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.btn-clear-filters:hover {
+  opacity: 0.8;
+}
+
+/* Acordeón de Categorías */
+.accordion-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 5px;
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.accordion-header:hover,
+.accordion-header.active {
+  color: #4ade80;
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 5px 15px 10px;
+}
+
+/* Checkboxes de Tecnologías */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.checkbox-label:hover {
+  color: #ffffff;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: #4ade80;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ---------- SECCIÓN PRINCIPAL Y BUSCADOR CENTRADO ---------- */
+.explorer-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.search-box-premium {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%; /* Evita desbordes a los lados */
+  margin: 0 auto 30px auto; /* Centrado perfecto */
+  box-sizing: border-box;
+}
+
+.search-box-premium input {
+  flex: 1;
+  background-color: #1a1a2e;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px 18px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box; /* Previene recortado a la derecha */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box-premium input:focus {
+  border-color: #4ade80;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.15);
+}
+
+.search-box-premium .btn-primary-levelup {
+  margin: 0; /* Remueve márgenes heredados */
+  flex-shrink: 0;
+}
+
+/* GRILLA DE CURSOS CENTRADA */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+  gap: 25px;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.course-card-wrapper {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  justify-content: center;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+/* ---------- PAGINACIÓN ---------- */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background-color: #1a1a2e;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+  border-color: #4ade80;
+  color: #4ade80;
+}
+
+.page-btn.active {
+  background-color: #4ade80;
+  color: #1a1a2e;
+  border-color: #4ade80;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .explorer-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .explorer-sidebar {
+    width: 100%;
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+}
+
+/* Ajustes Responsive (Pantallas menores a 900px, incluye iPad Mini) */
+@media (max-width: 900px) {
+  .explorer-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .explorer-sidebar {
+    width: 100%;
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+
+  /* Forzamos el buscador en vertical para iPad y móviles */
+  .search-box-premium {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box-premium input {
+    width: 100%;
+  }
+
+  .search-box-premium .btn-primary-levelup {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .explorer-title {
+    font-size: 2rem;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+}
