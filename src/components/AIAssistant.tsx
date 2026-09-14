@@ -210,7 +210,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const groqKey =
-      import.meta.env.VITE_GROQ_API_KEY;
+      import.meta.env.GROQ_API_KEY;
 
     if (groqKey?.trim()) {
       try {
@@ -266,7 +266,7 @@ Descripción del curso: "${activeCourse.description}".`
       }
     } else {
       console.warn(
-        '[LevelUp AI] ⚠️ Groq omitido: VITE_GROQ_API_KEY no configurada'
+        '[LevelUp AI] ⚠️ Groq omitido: GROQ_API_KEY no configurada'
       );
     }
 
@@ -275,7 +275,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const openRouterKey =
-      import.meta.env.VITE_OPENROUTER_API_KEY;
+      import.meta.env.OPENROUTER_API_KEY;
 
     console.log(
       '[LevelUp AI] 🔎 OpenRouter key:',
@@ -355,7 +355,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const geminiKey =
-      import.meta.env.VITE_GEMINI_API_KEY;
+      import.meta.env.GEMINI_API_KEY;
 
     if (geminiKey?.trim()) {
       try {
@@ -438,7 +438,7 @@ Descripción del curso: "${activeCourse.description}".`
       }
     } else {
       console.warn(
-        '[LevelUp AI] ⚠️ Gemini omitido: VITE_GEMINI_API_KEY no configurada'
+        '[LevelUp AI] ⚠️ Gemini omitido: GEMINI_API_KEY no configurada'
       );
     }
 
@@ -447,7 +447,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const mistralKey =
-      import.meta.env.VITE_MISTRAL_KEY;
+      import.meta.env.MISTRAL_KEY;
 
     if (mistralKey?.trim()) {
       try {
@@ -503,7 +503,7 @@ Descripción del curso: "${activeCourse.description}".`
       }
     } else {
       console.warn(
-        '[LevelUp AI] ⚠️ Mistral omitido: VITE_MISTRAL_KEY no configurada'
+        '[LevelUp AI] ⚠️ Mistral omitido: MISTRAL_KEY no configurada'
       );
     }
 
@@ -512,7 +512,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const cohereKey =
-      import.meta.env.VITE_COHERE_API_KEY;
+      import.meta.env.COHERE_API_KEY;
 
     if (cohereKey?.trim()) {
       try {
@@ -584,7 +584,7 @@ Descripción del curso: "${activeCourse.description}".`
       }
     } else {
       console.warn(
-        '[LevelUp AI] ⚠️ Cohere omitido: VITE_COHERE_API_KEY no configurada'
+        '[LevelUp AI] ⚠️ Cohere omitido: COHERE_API_KEY no configurada'
       );
     }
 
@@ -593,7 +593,7 @@ Descripción del curso: "${activeCourse.description}".`
     // ============================================================
 
     const hfKey =
-      import.meta.env.VITE_HUGGINGFACE_API_KEY;
+      import.meta.env.HUGGINGFACE_API_KEY;
 
     if (hfKey?.trim()) {
       try {
@@ -652,7 +652,7 @@ Descripción del curso: "${activeCourse.description}".`
       }
     } else {
       console.warn(
-        '[LevelUp AI] ⚠️ Hugging Face omitido: VITE_HUGGINGFACE_API_KEY no configurada'
+        '[LevelUp AI] ⚠️ Hugging Face omitido: HUGGINGFACE_API_KEY no configurada'
       );
     }
 
