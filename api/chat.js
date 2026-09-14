@@ -1,16 +1,14 @@
 export default async function handler(req, res) {
-  // Solo aceptar POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const { prompt, provider } = req.body;
+  const { messages, systemPrompt } = req.body;
 
-  if (!prompt) {
-    return res.status(400).json({ error: 'Falta el prompt' });
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'Faltan mensajes' });
   }
 
-  // Leer claves desde el servidor (Vercel las inyecta aquí)
   const keys = {
     groq: process.env.GROQ_API_KEY,
     openrouter: process.env.OPENROUTER_API_KEY,
@@ -20,25 +18,38 @@ export default async function handler(req, res) {
     huggingface: process.env.HUGGINGFACE_API_KEY,
   };
 
-  // Si no se especifica proveedor, usar el primero disponible (cascada)
   const orden = ['groq', 'openrouter', 'gemini', 'mistral', 'cohere', 'huggingface'];
-  const usar = provider || orden.find((p) => keys[p]);
+  const errores = [];
 
-  if (!usar || !keys[usar]) {
-    return res.status(500).json({ error: 'No hay ninguna API key configurada' });
+  for (const provider of orden) {
+    if (!keys[provider]) continue;
+
+    try {
+      const respuesta = await llamarIA(
+        provider,
+        keys[provider],
+        messages,
+        systemPrompt
+      );
+      return res.status(200).json({ provider, respuesta });
+    } catch (err) {
+      console.warn(`[chat.js] ${provider} falló:`, err.message);
+      errores.push(`${provider}: ${err.message}`);
+    }
   }
 
-  try {
-    const respuesta = await llamarIA(usar, keys[usar], prompt);
-    return res.status(200).json({ provider: usar, respuesta });
-  } catch (err) {
-    console.error(`Error con ${usar}:`, err);
-    return res.status(500).json({ error: err.message, provider: usar });
-  }
+  return res.status(500).json({
+    error: 'Ninguna IA respondió. ' + errores.join(' | ')
+  });
 }
 
-// Función que llama al proveedor correspondiente
-async function llamarIA(provider, key, prompt) {
+async function llamarIA(provider, key, messages, systemPrompt) {
+  // Mensajes en formato OpenAI (system + historial)
+  const openAIMessages = [
+    { role: 'system', content: systemPrompt },
+    ...messages.map((m) => ({ role: m.role, content: m.content }))
+  ];
+
   switch (provider) {
     case 'groq': {
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -48,8 +59,8 @@ async function llamarIA(provider, key, prompt) {
           Authorization: `Bearer ${key}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [{ role: 'user', content: prompt }],
+          model: 'openai/gpt-oss-120b',
+          messages: openAIMessages,
         }),
       });
       const d = await r.json();
@@ -63,10 +74,12 @@ async function llamarIA(provider, key, prompt) {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${key}`,
+          'HTTP-Referer': 'https://levelup-academy.vercel.app',
+          'X-Title': 'LevelUp Academy',
         },
         body: JSON.stringify({
-          model: 'meta-llama/llama-3.3-70b-instruct',
-          messages: [{ role: 'user', content: prompt }],
+          model: 'openrouter/free',
+          messages: openAIMessages,
         }),
       });
       const d = await r.json();
@@ -75,19 +88,25 @@ async function llamarIA(provider, key, prompt) {
     }
 
     case 'gemini': {
+      const contents = messages.map((m) => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      }));
+
       const r = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents,
           }),
         }
       );
       const d = await r.json();
       if (!r.ok) throw new Error(d.error?.message || 'Error Gemini');
-      return d.candidates[0].content.parts[0].text;
+      return d.candidates[0].content.parts.map((p) => p.text).join('');
     }
 
     case 'mistral': {
@@ -99,7 +118,7 @@ async function llamarIA(provider, key, prompt) {
         },
         body: JSON.stringify({
           model: 'mistral-small-latest',
-          messages: [{ role: 'user', content: prompt }],
+          messages: openAIMessages,
         }),
       });
       const d = await r.json();
@@ -115,30 +134,33 @@ async function llamarIA(provider, key, prompt) {
           Authorization: `Bearer ${key}`,
         },
         body: JSON.stringify({
-          model: 'command-r-plus',
-          messages: [{ role: 'user', content: prompt }],
+          model: 'command-a-plus-05-2026',
+          messages: openAIMessages,
         }),
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.message || 'Error Cohere');
-      return d.message.content[0].text;
+      return d.message.content.map((c) => c.text).join('');
     }
 
     case 'huggingface': {
       const r = await fetch(
-        'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3',
+        'https://router.huggingface.co/v1/chat/completions',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${key}`,
           },
-          body: JSON.stringify({ inputs: prompt }),
+          body: JSON.stringify({
+            model: 'openai/gpt-oss-120b:fastest',
+            messages: openAIMessages,
+          }),
         }
       );
       const d = await r.json();
-      if (!r.ok) throw new Error(d.error || 'Error HuggingFace');
-      return Array.isArray(d) ? d[0].generated_text : d.generated_text;
+      if (!r.ok) throw new Error(d.error?.message || 'Error HuggingFace');
+      return d.choices[0].message.content;
     }
 
     default:
